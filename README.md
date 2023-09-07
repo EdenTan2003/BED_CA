@@ -1,7 +1,6 @@
 # BED_CA
 A DVD store that shows users what dvd they can rent, the website shows the rating, cost, Age Rating, description and etc.
 
-
 Instructions:
 1. Import Database Data from the "sql" folder under the folder Server/sql/BED_CA2_Database. 
    - Added a "role" column in Staff table to differentiate between admin and staff, with extra values in the table
