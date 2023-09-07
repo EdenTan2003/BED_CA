@@ -1,0 +1,307 @@
+<!---
+    Class: DIT/FT/1B/10
+    Admission Number: P2243605
+    Name: Tan Yong Kit, Eden
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SP DVD</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">SP DVD Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a href="./index.html" class="btn btn-outline-light" role="button"
+                            id="logOutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Add Film</h1>
+                <p class="lead fw-normal text-muted mb-0">Add a new film to the database</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page content-->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./adminHome.html">Admin Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Film</li>
+            </ol>
+        </nav>
+        <div>
+            <div>
+                <p class="text-danger">* Required</p>
+            </div>
+            <div id="show_error"></div>
+            <form id="addFilmForm" class="my-4">
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Title: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="filmTitle" placeholder="E.g Batman">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Release Year: <label class="text-danger">*</label></label>
+                        <input type="number" class="form-control" id="releaseYear" placeholder="E.g 2000" min="1800"
+                            max="2023">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Rental Duration: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="rentDuration" placeholder="E.g 5">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Language: <label class="text-danger">*</label></label>
+                        <select class="form-select" id="languageID-select">
+                            <option value="" disabled selected>Select Film Language</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Rental Rate: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="rentRate" placeholder="E.g 2.99">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Length: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="filmLength" placeholder="E.g 90">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Replacement Cost: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="replacementCost" placeholder="E.g 29.99">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Rating: <label class="text-danger">*</label></label>
+                        <select class="form-select" id="filmRating-select">
+                            <option value="" disabled selected>Select Film Rating</option>
+                            <option value="PG">PG</option>
+                            <option value="G">G</option>
+                            <option value="PG-13">PG-13</option>
+                            <option value="R">R</option>
+                            <option value="NC-17">NC-17</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Special Features: <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="specialFeatures" placeholder="E.g Deleted Scenes">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Film Image: </label>
+                        <input type="file" class="form-control" id="filmImage" name="filmImage">
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <label class="form-label">Description: <label class="text-danger">*</label></label>
+                    <textarea type="text" class="form-control" id="filmDesc" placeholder="E.g A movie about Batman."
+                        rows="4"></textarea>
+                </div>
+
+                <button class="btn btn-primary mt-4 btn-lg w-100">Add Customer</button>
+            </form>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; SP DVD - 2023</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = './login.html';
+        }
+
+        const filmTitle = $('#filmTitle');
+        const releaseYear = $('#releaseYear');
+        const rentDuration = $('#rentDuration');
+        const filmLanguage = $('#languageID-select');
+        const rentRate = $('#rentRate');
+        const filmLength = $('#filmLength');
+        const replacementCost = $('#replacementCost');
+        const filmRating = $('#filmRating-select');
+        const specialFeatures = $('#specialFeatures');
+        const filmDesc = $('#filmDesc');
+
+        let langValueSelected;
+        let ratingValueSelected;
+
+        filmLanguage.on('change', function (e) {
+            const optionSelected = $("option:selected", this);
+            langValueSelected = this.value;
+        })
+
+        filmRating.on('change', function (e) {
+            const optionSelected = $("option:selected", this);
+            ratingValueSelected = this.value;
+        })
+
+        $(document).ready(() => {
+            getAllLanguage();
+        });
+
+        function bindAllLanguages(languages) {
+            languages.forEach((language) => {
+                const {
+                    language_id, name
+                } = language;
+
+                filmLanguage.append(`<option value="${language_id}">${name}</option>`);
+            });
+        }
+
+        function getAllLanguage() {
+            axios.get("http://localhost:3000/filmLanguage")
+                .then(res => {
+                    const { data } = res;
+
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        // Don't do anything and return
+                        return;
+                    }
+
+                    bindAllLanguages(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        function clearForm() {
+            filmTitle.val('');
+            releaseYear.val('');
+            rentDuration.val('');
+            filmLanguage.val('');
+            rentRate.val('');
+            filmLength.val('');
+            replacementCost.val('');
+            filmRating.val('');
+            specialFeatures.val('');
+            filmDesc.val('');
+            $('#filmImage').val('');
+        }
+
+        $("#addFilmForm").submit(function (e) {
+            // Prevent default action for form
+            e.preventDefault();
+
+            if (!filmTitle.val() || !releaseYear.val() || !rentDuration.val() || !langValueSelected || !rentRate.val() || !filmLength.val() || !replacementCost.val() || !ratingValueSelected || !specialFeatures.val() || !filmDesc.val()) {
+                $("#show_error").append(showAlertWarning("Please fill in all fields!"));
+                setTimeout(function () {
+                    $("#show_error").empty();
+                }, 3000);
+                return;
+            }
+
+            const formData = new FormData($("#addFilmForm")[0]);
+
+            // //get image file
+            const files = formData.getAll('filmImage');
+            const fileLength = $('#filmImage')[0].files.length;
+
+            axios.post("http://localhost:3000/film", {
+                title: filmTitle.val(),
+                description: filmDesc.val(),
+                release_year: releaseYear.val(),
+                language_id: langValueSelected,
+                rental_duration: rentDuration.val(),
+                rental_rate: rentRate.val(),
+                length: filmLength.val(),
+                replacement_cost: replacementCost.val(),
+                rating: ratingValueSelected,
+                special_features: specialFeatures.val()
+            }, {
+                headers: { authorization: `Bearer ${token}` }
+            })
+                .then(res => {
+                    const film_id = res.data;
+                    if (fileLength > 0) {
+                        console.log("Uploading image");
+                        const imgName = files[0].name;
+                        console.log(imgName);
+                        formData.append('image', imgName);
+                        axios.post(`http://localhost:3000/filmImage/${film_id}`, formData, {
+                            headers: { authorization: `Bearer ${token}` }
+                        })
+                            .then(res => {
+                                $("#show_error").append(showAlertSuccess("Film and Image added successfully!"));
+                                setTimeout(function () {
+                                    $("#show_error").empty();
+                                }, 3000);
+                                clearForm();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                $("#show_error").append(showAlertDanger("Error adding image!"));
+                                setTimeout(function () {
+                                    $("#show_error").empty();
+                                }, 3000);
+                            });
+                    }
+                    else {
+                        $("#show_error").append(showAlertSuccess("Film added successfully!"));
+                        setTimeout(function () {
+                            $("#show_error").empty();
+                        }, 3000);
+                        clearForm();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    $("#show_error").append(showAlertDanger("Error adding film!"));
+                    setTimeout(function () {
+                        $("#show_error").empty();
+                    }, 3000);
+                });
+        });
+
+        const logOutBtn = document.getElementById('logOutBtn');
+        logOutBtn.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = './login.html';
+        });
+    </script>
+
+</body>
+
+</html>

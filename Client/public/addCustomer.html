@@ -1,0 +1,404 @@
+<!---
+    Class: DIT/FT/1B/10
+    Admission Number: P2243605
+    Name: Tan Yong Kit, Eden
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SP DVD</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html">SP DVD Shop</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="./index.html"
+                class="btn btn-outline-light"
+                role="button"
+                id="logOutBtn"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+      <div class="container">
+        <div class="text-center my-5">
+          <h1 class="fw-bolder">Add Customer</h1>
+          <p class="lead fw-normal text-muted mb-0">
+            Add a new customer to the database
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page content-->
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="./adminHome.html">Admin Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Add New Customer
+          </li>
+        </ol>
+      </nav>
+      <div>
+        <div>
+          <p class="text-danger">* Required</p>
+        </div>
+        <div id="show_error"></div>
+        <form id="addCustomerForm" class="my-4">
+          <div class="row my-3">
+            <div class="form-group col-md-6">
+              <label class="form-label"
+                >First Name: <label class="text-danger">*</label></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="customerFirstName"
+                placeholder="E.g John"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="form-label"
+                >Last Name: <label class="text-danger">*</label></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="customerLastName"
+                placeholder="E.g Doe"
+              />
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="form-group col-md-6">
+              <label class="form-label"
+                >Phone Number: <label class="text-danger">*</label></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="customerPhone"
+                placeholder="E.g +65 99998888"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="form-label"
+                >Store Address: <label class="text-danger">*</label></label
+              >
+              <select class="form-select" id="customerStore-select">
+                <option value="" disabled selected>Select Store Address</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group my-3">
+            <label class="form-label"
+              >Email: <label class="text-danger">*</label></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="customerEmail"
+              placeholder="E.g johnDoe@gmail.com"
+            />
+          </div>
+          <div class="form-group my-3">
+            <label class="form-label"
+              >Address Line 1 <label class="text-danger">*</label></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="customerAddressLine1"
+              placeholder="E.g 1234 Main St"
+            />
+          </div>
+          <div class="form-group my-3">
+            <label class="form-label">Address Line 2</label>
+            <input
+              type="text"
+              class="form-control"
+              id="customerAddressLine2"
+              placeholder="E.g Apartment, studio, or floor"
+            />
+          </div>
+          <div class="row my-3">
+            <div class="form-group col-md-6">
+              <label class="form-label"
+                >City <label class="text-danger">*</label></label
+              >
+              <select class="form-select" id="cityID-select">
+                <option value="" disabled selected>Select City</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="form-label"
+                >District <label class="text-danger">*</label></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="customerDistrict"
+                placeholder="E.g Texas"
+              />
+            </div>
+            <div class="form-group col-md-2">
+              <label class="form-label"
+                >Postal Code <label class="text-danger">*</label></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="customerPostalCode"
+                placeholder="E.g 123124"
+              />
+            </div>
+          </div>
+
+          <button class="btn btn-primary mt-4 btn-lg w-100">
+            Add Customer
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; SP DVD - 2023</p>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "./login.html";
+      }
+
+      const customerFirstName = $("#customerFirstName");
+      const customerLastName = $("#customerLastName");
+      const customerEmail = $("#customerEmail");
+      const customerAddressLine1 = $("#customerAddressLine1");
+      const customerAddressLine2 = $("#customerAddressLine2");
+      const customerDistrict = $("#customerDistrict");
+      const cityIDSelect = $("#cityID-select");
+      const customerStoreID = $("#customerStore-select");
+      const customerPostalCode = $("#customerPostalCode");
+      const customerPhone = $("#customerPhone");
+
+      let cityValueSelected;
+      let storeValueSelected;
+
+      cityIDSelect.on("change", function (e) {
+        const optionSelected = $("option:selected", this);
+        cityValueSelected = this.value;
+      });
+
+      customerStoreID.on("change", function (e) {
+        const optionSelected = $("option:selected", this);
+        storeValueSelected = this.value;
+      });
+
+      $(document).ready(() => {
+        getAllCities();
+        getAllStoreAddress();
+      });
+
+      function bindAllStoreAddress(allStoreAddress) {
+        allStoreAddress.forEach((storeAddress) => {
+          const { store_id, address } = storeAddress;
+
+          customerStoreID.append(
+            `<option value="${store_id}">${address} - Store ${store_id}</option>`
+          );
+        });
+      }
+
+      function bindAllCities(allCities) {
+        allCities.forEach((cityName) => {
+          const { city_id, city } = cityName;
+
+          cityIDSelect.append(`<option value="${city_id}">${city}</option>`);
+        });
+      }
+
+      function getAllStoreAddress() {
+        axios
+          .get("http://localhost:3000/storeAddress")
+          .then((res) => {
+            const { data } = res;
+
+            if (!data || !Array.isArray(data) || data.length === 0) {
+              // Don't do anything and return
+              return;
+            }
+            // Bind the cities to HTML
+            bindAllStoreAddress(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      function getAllCities() {
+        axios
+          .get("http://localhost:3000/cities")
+          .then((res) => {
+            const { data } = res;
+
+            if (!data || !Array.isArray(data) || data.length === 0) {
+              // Don't do anything and return
+              return;
+            }
+            // Bind the cities to HTML
+            bindAllCities(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      function clearForm() {
+        customerStoreID.val("");
+        customerFirstName.val("");
+        customerLastName.val("");
+        customerEmail.val("");
+        customerAddressLine1.val("");
+        customerAddressLine2.val("");
+        customerDistrict.val("");
+        customerPostalCode.val("");
+        customerPhone.val("");
+        cityIDSelect.get(0).selectedIndex = 0;
+        customerStoreID.get(0).selectedIndex = 0;
+      }
+
+      $("#addCustomerForm").submit(function (e) {
+        // Prevent default action for form
+        e.preventDefault();
+
+        if (
+          !storeValueSelected ||
+          !customerFirstName.val() ||
+          !customerLastName.val() ||
+          !customerEmail.val() ||
+          !customerAddressLine1.val() ||
+          !customerDistrict.val() ||
+          !cityValueSelected ||
+          !customerPostalCode.val() ||
+          !customerPhone.val()
+        ) {
+          $("#show_error").append(
+            showAlertWarning("Please fill in all fields!")
+          );
+          setTimeout(function () {
+            $("#show_error").empty();
+          }, 3000);
+          return;
+        }
+
+        axios
+          .post(
+            "http://localhost:3000/customers",
+            {
+              store_id: storeValueSelected,
+              first_name: customerFirstName.val(),
+              last_name: customerLastName.val(),
+              email: customerEmail.val(),
+              address: {
+                address_line1: customerAddressLine1.val(),
+                address_line2: customerAddressLine2.val(),
+                district: customerDistrict.val(),
+                city_id: cityValueSelected,
+                postal_code: customerPostalCode.val(),
+                phone: customerPhone.val(),
+              },
+            },
+            {
+              headers: { authorization: `Bearer ${token}` },
+            }
+          )
+          .then((res) => {
+            $("#show_error").append(
+              showAlertSuccess(
+                `Successfully added customer - ${customerFirstName.val()} ${customerLastName.val()}!`
+              )
+            );
+            setTimeout(function () {
+              $("#show_error").empty();
+            }, 3000);
+            if (res.status === 201) {
+              clearForm();
+            }
+          })
+          .catch((err) => {
+            if (err.response.status === 409) {
+              $("#show_error").append(showAlertDanger("Email already exists!"));
+              setTimeout(function () {
+                $("#show_error").empty();
+              }, 3000);
+              return;
+            }
+            $("#show_error").append(
+              showAlertDanger("Something went wrong, please try again!")
+            );
+            setTimeout(function () {
+              $("#show_error").empty();
+            }, 3000);
+          });
+      });
+
+      const logOutBtn = document.getElementById("logOutBtn");
+      logOutBtn.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "./login.html";
+      });
+    </script>
+  </body>
+</html>

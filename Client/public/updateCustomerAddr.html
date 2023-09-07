@@ -1,0 +1,241 @@
+<!---
+    Class: DIT/FT/1B/10
+    Admission Number: P2243605
+    Name: Tan Yong Kit, Eden
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SP DVD</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">SP DVD Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a href="./index.html" class="btn btn-outline-light" role="button"
+                            id="logOutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Add Customer</h1>
+                <p class="lead fw-normal text-muted mb-0">Add a new customer to the database</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page content-->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./adminHome.html">Admin Home</a></li>
+                <li class="breadcrumb-item"><a href="./searchCustomers.html">Customer Search</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Update Customer Address</li>
+            </ol>
+        </nav>
+        <div>
+            <div>
+                <p class="text-danger">* Required</p>
+            </div>
+            <div id="show_error"></div>
+            <form id="updateCustomerAddressForm" class="my-4">
+                <div class="form-group my-3">
+                    <label class="form-label">Address Line 1 <label class="text-danger">*</label></label>
+                    <input type="text" class="form-control" id="customerAddressLine1" placeholder="E.g 1234 Main St">
+                </div>
+                <div class="form-group my-3">
+                    <label class="form-label">Address Line 2</label>
+                    <input type="text" class="form-control" id="customerAddressLine2"
+                        placeholder="E.g Apartment, studio, or floor">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number: <label class="text-danger">*</label></label>
+                    <input type="text" class="form-control" id="customerPhone" placeholder="E.g +65 99998888">
+                </div>
+                <div class="row my-3">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">City <label class="text-danger">*</label></label>
+                        <select class="form-select" id="cityID-select">
+                            <option value="" disabled selected>Select City</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label">District <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="customerDistrict" placeholder="E.g Texas">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="form-label">Postal Code <label class="text-danger">*</label></label>
+                        <input type="text" class="form-control" id="customerPostalCode" placeholder="E.g 123124">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-4 btn-lg w-100">Update Address</button>
+            </form>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; SP DVD - 2023</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        const queryParams = new URLSearchParams(window.location.search);
+        const customerIDFromURL = queryParams.get('id');
+        redirectIf(!customerIDFromURL, './adminHome.html');
+
+        const addressLine1 = $('#customerAddressLine1');
+        const addressLine2 = $('#customerAddressLine2');
+        const customerDistrict = $('#customerDistrict');
+        const postalCode = $('#customerPostalCode');
+        const customerPhone = $('#customerPhone');
+        const cityIDSelect = $('#cityID-select');
+        const logOutBtn = document.getElementById('logOutBtn');
+        let cityValueSelected;
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = './login.html';
+        }
+
+        cityIDSelect.on('change', function (e) {
+            const optionSelected = $("option:selected", this);
+            cityValueSelected = this.value;
+        })
+
+        $(document).ready(() => {
+            getAllCities();
+        });
+
+        axios.get(`http://localhost:3000/customerAddress/${customerIDFromURL}`)
+            .then(res => {
+                const { data } = res;
+                console.log(data);
+                const { address_id, address, address2, district, city_id, postal_code, phone } = data;
+                console.log(address_id, address, district, city_id, postal_code, phone)
+                addressLine1.val(address);
+                addressLine2.val(address2 || '');
+                cityValueSelected = city_id;
+                customerDistrict.val(district);
+                postalCode.val(postal_code);
+                customerPhone.val(phone);
+
+            }).catch(err => {
+                redirectIf(true, './adminHome.html');
+                console.log(err);
+            });
+
+        function bindAllCities(allCities) {
+            allCities.forEach((cityName) => {
+                const {
+                    city_id, city
+                } = cityName;
+
+                cityIDSelect.append(`<option value="${city_id}">${city}</option>`)
+            })
+        }
+
+        function getAllCities() {
+            axios.get("http://localhost:3000/cities")
+                .then((res) => {
+                    const { data } = res;
+
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        // Don't do anything and return
+                        return;
+                    }
+                    // Bind the cities to HTML
+                    bindAllCities(res.data);
+                    cityIDSelect.val(cityValueSelected);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+
+        $('#updateCustomerAddressForm').on('submit', (e) => {
+
+            e.preventDefault();
+
+            if (!addressLine1.val() || !customerDistrict.val() || !postalCode.val() || !customerPhone.val()) {
+                $("#show_error").append(showAlertWarning("Please fill in all fields!"));
+                setTimeout(function () {
+                    $("#show_error").empty();
+                }, 3000);
+                return;
+            }
+            
+            const addressLine1Value = addressLine1.val();
+            const addressLine2Value = addressLine2.val();
+            const customerDistrictValue = customerDistrict.val();
+            const postalCodeValue = postalCode.val();
+            const customerPhoneValue = customerPhone.val();
+
+            axios.put(`http://localhost:3000/customers/${customerIDFromURL}/address`, {
+                address_line1: addressLine1Value,
+                address_line2: addressLine2Value || ' ',
+                district: customerDistrictValue,
+                city_id: cityValueSelected,
+                postal_code: postalCodeValue,
+                phone: customerPhoneValue
+            }, {
+                headers: { authorization: `Bearer ${token}` }
+            })
+                .then(res => {
+                    const { data } = res;
+                    console.log(data);
+                    $("#show_error").append(showAlertSuccess("Successfully updated customer address!"));
+                    setTimeout(function () {
+                        $("#show_error").empty();
+                    }, 3000);
+                }).catch(err => {
+                    console.log(err);
+                    $("#show_error").append(showAlertError("Something went wrong, please try again!"));
+                    setTimeout(function () {
+                        $("#show_error").empty();
+                    }, 3000);
+                });
+        });
+
+
+        logOutBtn.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = './login.html';
+        });
+    </script>
+
+</body>
+
+</html>

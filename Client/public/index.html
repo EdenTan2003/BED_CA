@@ -1,0 +1,247 @@
+<!---
+    Class: DIT/FT/1B/10
+    Admission Number: P2243605
+    Name: Tan Yong Kit, Eden
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SP DVD</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">SP DVD Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a href="./login.html" class="btn btn-outline-light" role="button">Admin
+                            Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to SP DVD!</h1>
+                <p class="lead mb-0">Start by searching for a Film Title Or Film Category.</p>
+            </div>
+        </div>
+    </header>
+    <!-- Page content-->
+    <section>
+        <div class="container">
+            <div class="mb-5">
+                <div  id="show_error"></div>
+                <div class="row">
+                    <div class="mb-3 col">
+                        <label for="SearchTitle" class="form-label">Film Search:</label>
+                        <input type="text" class="form-control" placeholder="Search for a film..." id="searchQuery">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="MaxRental" class="form-label">Max rental rate:</label>
+                        <input type="number" class="form-control" placeholder="E.g. 2.99" id="maxRentalRate">
+                    </div>
+                    <div class="gap-2 mx-auto text-center">
+                        <button type="submit" class="btn btn-primary mt-3 w-100" id="searchButton">Search</button>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label for="SearchTitle" class="form-label">Search By Category:</label>
+                        <select class="form-select" id="category-select">
+                            <option value="" disabled selected>Select Category</option>
+                        </select>
+                    </div>
+                    <div class="my-4">
+                        <div class="row" id="filmListings">
+
+                        </div>
+                        <div class="d-flex aligns-items-center justify-content-center">
+                            <p id="noResults" class="text-align">No Results Found</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; SP DVD - 2023</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        const filmListings = $("#filmListings");
+        const searchQuery = $("#searchQuery");
+        const maxRentalRate = $("#maxRentalRate");
+        const searchButton = $("#searchButton");
+        const categorySelect = $("#category-select");
+        const noResults = $("#noResults");
+        noResults.hide();
+
+        searchQuery.text("");
+
+        searchButton.click(e => {
+            if (searchQuery.val() === "") {
+                // alert("Please enter a search query");
+                $("#show_error").append(showAlertWarning("Please enter a search query"));
+                setTimeout(function () {
+                    $("#show_error").empty();
+                }, 3000);
+                return;
+            }
+            getFilm();
+            clearCatSelection();
+        })
+
+        function clearCatSelection() {
+            categorySelect.get(0).selectedIndex = 0;
+        }
+
+        $(document).ready(() => {
+            // Call the get all categories function
+            getAllFilmCategories();
+        })
+
+        // Bind the category data to <select> element, dynamically list film category in option
+        function bindAllFilmCategories(allCategories) {
+            allCategories.forEach((category) => {
+                const {
+                    category_id, name
+                } = category;
+
+                categorySelect.append(`<option value="${category_id}">${name}</option>`)
+            })
+        }
+
+        categorySelect.on('change', function (e) {
+            const optionSelected = $("option:selected", this);
+            const valueSelected = this.value;
+
+            handleCategorySelectChange(valueSelected);
+            searchQuery.val("");
+            maxRentalRate.val("");
+        });
+
+        function handleCategorySelectChange(categoryId) {
+            axios.get(`http://localhost:3000/film_categories/${categoryId}/films`)
+                .then(res => {
+                    const { data } = res;
+
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        // Don't do anything and return
+                        return;
+                    }
+
+                    filmListings.empty();
+                    data.forEach((d) => {
+                        const {
+                            film_id, title, rating, release_year, category
+                        } = d;
+                        //Bind data to HTML
+                        filmListings.append(FilmListingTemplate(film_id, title, release_year, rating, category))
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        // Get all film categories
+        function getAllFilmCategories() {
+            axios.get("http://localhost:3000/film/categories")
+                .then(res => {
+                    const { data } = res;
+
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        // Don't do anything and return
+                        return;
+                    }
+                    // Bind the categories to HTML
+                    bindAllFilmCategories(data)
+
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        //Display Films based on given film title and max rental rate if provided
+        function getFilm() {
+            axios.get("http://localhost:3000/film", {
+                params: {
+                    title: searchQuery.val(),
+                    max_price: maxRentalRate.val()
+                }
+            })
+                .then(res => {
+                    filmListings.empty();
+                    res.data.forEach(film => {
+                        filmListings.append(FilmListingTemplate(film.film_id, film.title, film.release_year, film.rating, film.category))
+                    })
+                    if (res.data.length === 0) {
+                        noResults.show();
+                    } else {
+                        noResults.hide();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        // Film Listing Card Template
+        function FilmListingTemplate(id = "", title = "", release_year = "", rating = "", category = "") {
+            return `
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="px-2 py-2">
+                            <h4 class="card-text">${title}</h4>
+                            <h5 class="card-text"><b>Release Year:</b> ${release_year}</h5>
+                            <div class="d-flex justify-content-start">
+                                <h5><span class="badge bg-dark mb-3"> ${category} </span></h5>
+                                <h5><span class="badge bg-dark mb-3 ms-3"> ${rating} </span></h5>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="/filmDetails.html?id=${id}" class="btn btn-sm btn-primary text-light">View More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+    </script>
+</body>
+
+</html>

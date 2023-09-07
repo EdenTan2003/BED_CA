@@ -1,0 +1,170 @@
+<!---
+    Class: DIT/FT/1B/10
+    Admission Number: P2243605
+    Name: Tan Yong Kit, Eden
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SP DVD</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">SP DVD Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a href="./index.html" class="btn btn-outline-light" role="button"
+                            id="logOutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Edit Customer Address</h1>
+                <p class="lead fw-normal text-muted mb-0">Updating a current customer address?</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page content-->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./adminHome.html">Admin Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Customer Search</li>
+            </ol>
+        </nav>
+        <div>
+            <div id="show_error"></div>
+            <div class="my-5">
+                <div class="row">
+                    <div class="mb-3 col">
+                        <label for="SearchTitle" class="form-label">Search By Customer Email or Name:</label>
+                        <input type="text" class="form-control" placeholder="E.g. johnDoe@gmail.com or John"
+                            id="searchQuery">
+                    </div>
+                    <div class="gap-2 mx-auto text-center">
+                        <button type="submit" class="btn btn-primary mt-3 w-100" id="searchButton">Search</button>
+                    </div>
+                    <div class="my-4">
+                        <div class="row" id="customerListings">
+
+                        </div>
+                        <div class="d-flex aligns-items-center justify-content-center">
+                            <p id="noResults" class="text-align">No Results Found</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; SP DVD - 2023</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = './login.html';
+        }
+        const noResults = $("#noResults");
+        const customerListings = $("#customerListings");
+        const searchButton = $("#searchButton");
+        const searchQuery = $("#searchQuery");
+        noResults.hide();
+
+        searchButton.click(() => {
+            if (searchQuery.val() === "") {
+                $("#show_error").append(showAlertWarning("Please enter a seach query"));
+                setTimeout(function () {
+                    $("#show_error").empty();
+                }, 3000);
+                return;
+            }
+            getCustomer();
+        })
+
+        function getCustomer() {
+            axios.get("http://localhost:3000/customerList", {
+                params: {
+                    email: searchQuery.val()
+                }
+            })
+                .then(res => {
+                    customerListings.empty();
+                    res.data.forEach(customer => {
+                        customerListings.append(CustomerListingTemplate(customer.customer_id, customer.customer_fullname, customer.email));
+                    })
+                    if (res.data.length === 0) {
+                        noResults.show();
+                    } else {
+                        noResults.hide();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        function CustomerListingTemplate(id = "", full_name = "", email = "") {
+            return `
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div>
+                            <p class="card-text"><b>Customer Name:</b> <br>${full_name}</p>
+                        </div>
+                        <p class="card-text"><b>Customer Email:</b> <br>${email}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="/updateCustomerAddr.html?id=${id}" class="btn btn-md btn-primary text-light">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+
+        const logOutBtn = document.getElementById('logOutBtn');
+        logOutBtn.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = './login.html';
+        });
+    </script>
+
+</body>
+
+</html>
