@@ -28,16 +28,16 @@ Instructions:
 
 ### Homepage
 
-![Welcome Page](ReadMe_Img\welcomePage.png)
+![Welcome Page](ReadMe_Img/welcomePage.png)
 
 ### Search Results
 
-![Search Results](ReadMe_Img\searchResults.png)
+![Search Results](ReadMe_Img/searchResults.png)
 
 ### DVD Info Page
 
-![Dvd Info](ReadMe_Img\dvdInfo.png)
+![Dvd Info](ReadMe_Img/dvdInfo.png)
 
 ### Admin Page
 
-![Admin Site](ReadMe_Img\adminSite.png)
+![Admin Site](ReadMe_Img/adminSite.png)
