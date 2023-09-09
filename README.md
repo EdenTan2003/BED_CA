@@ -1,8 +1,11 @@
 # BED_CA
+
 A DVD store that shows users what dvd they can rent, the website shows the rating, cost, Age Rating, description and etc.
 
 Instructions:
-1. Import Database Data from the "sql" folder under the folder Server/sql/BED_CA2_Database. 
+
+1. Import Database Data from the "sql" folder under the folder Server/sql/BED_CA2_Database.
+
    - Added a "role" column in Staff table to differentiate between admin and staff, with extra values in the table
    - Added a "image" column in Film table to store the image name when adding new film
 
@@ -20,3 +23,21 @@ Instructions:
    b. Client -> "nodemon index.js"
 
 5. Your Client Side should be running now where the Host Link is "http://localhost:3001".
+
+## Snippets of how the website looks like:
+
+### Homepage
+
+![Welcome Page](ReadMe_Img\welcomePage.png)
+
+### Search Results
+
+![Search Results](ReadMe_Img\searchResults.png)
+
+### DVD Info Page
+
+![Dvd Info](ReadMe_Img\dvdInfo.png)
+
+### Admin Page
+
+![Admin Site](ReadMe_Img\adminSite.png)
